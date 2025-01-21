@@ -22,9 +22,28 @@ app.get("/test", (req, res) => {
 
 app.use("/api", apiRouter);
 
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 
+app.post('/api/user/login', (req,res,next)=>{
 
+})
+
+
+//http://localhost:3000/api/courses/create-course
+
+
+
+//http://localhost:3000/api/user/signup
 //http://localhost:3000/api/user/login
+//http://localhost:3000/api/user/profile
+//http://localhost:3000/api/user/edit-profile
+
+
+
+//http://localhost:3000/api/mentor/signup
+//http://localhost:3000/api/mentor/login
+//http://localhost:3000/api/mentor/profile
+//http://localhost:3000/api/mentor/edit-profile

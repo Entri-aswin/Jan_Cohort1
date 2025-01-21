@@ -52,10 +52,14 @@ export const userLogin = async (req, res, next) => {
             return res.status(401).json({ message: "user not authenticated" });
         }
 
-        const token = generateToken(userData._id);
+        const token = generateToken(userExist._id);
         res.cookie("token", token);
 
-        return res.json({ data: userData, message: "user login success" });
+        // delete userExist._doc.password;
+        {
+            const { password, ...userDataWithoutPassword } = userExist._doc;
+            return res.json({ data: userDataWithoutPassword, message: "user login success" });
+        }
     } catch (error) {
         return res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
     }
