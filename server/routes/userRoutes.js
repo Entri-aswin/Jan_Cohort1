@@ -1,5 +1,5 @@
 import e from "express";
-import { userLogin, userLogout, userProfile, userSignup } from "../controllers/userControllers.js";
+import { checkUser, userLogin, userLogout, userProfile, userSignup } from "../controllers/userControllers.js";
 import { userAuth } from "../middlewares/userAuth.js";
 
 const router = e.Router();
@@ -23,5 +23,6 @@ router.get("/logout", userAuth, userLogout);
 
 
 //check-user
+router.get("/check-user", userAuth, checkUser);
 
 export { router as userRouter };

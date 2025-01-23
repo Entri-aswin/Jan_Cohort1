@@ -27,9 +27,7 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 
-app.post('/api/user/login', (req,res,next)=>{
 
-})
 
 
 //http://localhost:3000/api/courses/create-course

@@ -85,3 +85,11 @@ export const userLogout = async (req, res, next) => {
         return res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
     }
 };
+
+export const checkUser = async (req, res, next) => {
+    try {
+        return res.json({ message: "user autherized" });
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
+    }
+};
