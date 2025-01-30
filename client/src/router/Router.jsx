@@ -1,40 +1,47 @@
 import { createBrowserRouter } from "react-router-dom";
 import { UserLayout } from "../layout/UserLayout";
+import { Home } from "../pages/user/Home";
+import { Signup } from "../pages/shared/Signup";
+import { Login } from "../pages/shared/Login";
+import { About } from "../pages/user/About";
+import { Contact } from "../pages/user/Contact";
+import { Course } from "../pages/user/Course";
+import { CourseDetails } from "../pages/user/CourseDetails";
+import { ErrorPage } from "../pages/shared/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path: "",
         element: <UserLayout />,
-        // errorElement: <ErrorPage  />,
+        errorElement: <ErrorPage  />,
         children: [
             {
                 path: "",
-                element: <h1>Home</h1>
-                // element: <Home />,
+                element: <Home />,
             },
             {
                 path: "signup",
-                // element: <Signup />,
+                element: <Signup />,
             },
             {
                 path: "login",
-                // element: <Login />,
+                element: <Login />,
             },
             {
                 path: "about",
-                // element: <About />,
+                element: <About />,
             },
             {
                 path: "contact",
-                // element: <Contact />,
+                element: <Contact />,
             },
             {
                 path: "courses",
-                // element: <CoursePage />,
+                element: <Course />,
             },
             {
                 path: "courseDetails/:courseId",
-                // element: <CourseDetailsPage />,
+                element: <CourseDetails />,
             },
             {
                 // element: <ProtectedRoute />,
@@ -46,6 +53,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "profile",
+                        element: <h1>Profile page</h1>
                         // element: <Profile />,
                     },
                     {
