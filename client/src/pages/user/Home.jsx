@@ -22,6 +22,11 @@ export const Home = () => {
                     />
                 </div>
             </section>
+            <section className="my-32">
+                <div className="w-full h-32 bg-slate-200 dark:bg-slate-800   ">
+                    <h1> this is section 2</h1>
+                </div>
+            </section>
             <section>
                 <Carrousel />
             </section>

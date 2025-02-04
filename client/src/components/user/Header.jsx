@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { DarkMode } from "../shared/DarkMode";
+import { DarkMode } from "../shared/DarkMode";
 
 export const Header = () => {
 
@@ -29,7 +29,7 @@ const navigate = useNavigate()
                     </ul>
                 </nav>
                 <div className="flex justify-center gap-3">
-                    {/* <DarkMode /> */}
+                    <DarkMode />
                     <button className="btn btn-primary" onClick={()=>navigate('/signup')} >Join Us</button>
                 </div>
             </div>

@@ -1,21 +1,34 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../config/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Login = () => {
+export const Login = ({ role }) => {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+
+    const user = {
+        role: "user",
+        loginAPI: "/user/login",
+        profileRoute: "/user/profile",
+        signupRoute: "/signup",
+    };
+
+    if (role == "mentor") {
+        user.role = "mentor";
+        user.loginAPI = "/mentor/login";
+        (user.profileRoute = "/mentor/profile"), (user.signupRoute = "/mentor/signup");
+    }
 
     const onSubmit = async (data) => {
         try {
             const response = await axiosInstance({
                 method: "PUT",
-                url: "/user/login",
+                url: user.loginAPI,
                 data: data,
             });
             console.log("response====", response);
-            navigate("/user/profile");
+            navigate(user.profileRoute);
         } catch (error) {
             console.log(error);
         }
@@ -25,7 +38,7 @@ export const Login = () => {
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Login now!</h1>
+                    <h1 className="text-5xl font-bold">Login now! {user.role} </h1>
                     <p className="py-6">
                         Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque
                         aut repudiandae et a id nisi.
@@ -50,11 +63,20 @@ export const Login = () => {
                                 className="input input-bordered"
                                 required
                             />
-                            <label className="label">
-                                <a href="#" className="label-text-alt link link-hover">
-                                    Forgot password?
-                                </a>
-                            </label>
+                            <div className="flex items-center justify-between">
+                                <label className="label">
+                                    <a href="#" className="label-text-alt link link-hover">
+                                        Forgot password?
+                                    </a>
+                                </label>
+                                <label className="label">
+                                    <Link to={user.signupRoute}>
+                                        <a href="#" className="label-text-alt link link-hover">
+                                            New User?
+                                        </a>
+                                    </Link>
+                                </label>
+                            </div>
                         </div>
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Login</button>

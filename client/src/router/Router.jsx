@@ -8,12 +8,16 @@ import { Contact } from "../pages/user/Contact";
 import { Course } from "../pages/user/Course";
 import { CourseDetails } from "../pages/user/CourseDetails";
 import { ErrorPage } from "../pages/shared/ErrorPage";
+import { MentorLayout } from "../layout/MentorLayout";
+import { Profile } from "../pages/user/Profile";
+import { ProtectedRoute } from "./ProtectedRoute";
 
+const data = {};
 export const router = createBrowserRouter([
     {
         path: "",
         element: <UserLayout />,
-        errorElement: <ErrorPage  />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "",
@@ -44,7 +48,7 @@ export const router = createBrowserRouter([
                 element: <CourseDetails />,
             },
             {
-                // element: <ProtectedRoute />,
+                element: <ProtectedRoute />,
                 path: "user",
                 children: [
                     {
@@ -53,8 +57,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "profile",
-                        element: <h1>Profile page</h1>
-                        // element: <Profile />,
+                        element: <Profile />,
                     },
                     {
                         path: "cart",
@@ -72,5 +75,34 @@ export const router = createBrowserRouter([
             },
         ],
     },
+    {
+        path: "mentor",
+        element: <MentorLayout />,
+        errorElement: <ErrorPage role="mentor" />,
+        children: [
+            {
+                path: "login",
+                element: <Login role="mentor" />,
+            },
+            {
+                path: "signup",
+                element: <Signup role="mentor" />,
+            },
+        ],
+    },
+    {
+        path: "admin",
+        element: <MentorLayout />,
+        errorElement: <ErrorPage role="admin" />,
+        children: [
+            {
+                path: "login",
+                element: <Login role="admin" />,
+            },
+            {
+                path: "signup",
+                element: <Signup role="admin" />,
+            },
+        ],
+    },
 ]);
-
