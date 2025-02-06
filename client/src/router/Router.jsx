@@ -11,6 +11,8 @@ import { ErrorPage } from "../pages/shared/ErrorPage";
 import { MentorLayout } from "../layout/MentorLayout";
 import { Profile } from "../pages/user/Profile";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { ProtectedRouteMentor } from "./ProtectedRouteMentor";
+import { CreateCourse } from "../pages/mentor/CreateCourse";
 
 const data = {};
 export const router = createBrowserRouter([
@@ -87,6 +89,26 @@ export const router = createBrowserRouter([
             {
                 path: "signup",
                 element: <Signup role="mentor" />,
+            },
+            {
+                path:"",
+                element: <ProtectedRouteMentor />,
+                children: [
+                    {
+                        path: "dashboard",
+                    },
+                    {
+                        path: "all-courses",
+                    },
+                    {
+                        path: "profile",
+                        element: <h1>Mentor Profile page</h1>
+                    },
+                    {
+                        path: "create-course",
+                        element: <CreateCourse />,
+                    },
+                ],
             },
         ],
     },

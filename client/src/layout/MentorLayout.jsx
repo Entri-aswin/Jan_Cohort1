@@ -5,7 +5,7 @@ import { MentroHeader } from "../components/mentor/MentroHeader";
 import { Header } from "../components/mentor/Header";
 
 export const MentorLayout = () => {
-    const isUserAuth = false;
+    const isUserAuth = true;
 
     return (
         <div>
