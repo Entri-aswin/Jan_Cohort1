@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { UserHeader } from "../components/user/UserHeader";
 import { axiosInstance } from "../config/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
-import { saveUser } from "../redux/features/userSlice";
+import { clearUser, saveUser } from "../redux/features/userSlice";
 
 export const UserLayout = () => {
     const { isUserAuth,userData } = useSelector((state) => state.user);
@@ -20,8 +20,9 @@ export const UserLayout = () => {
                 method: "GET",
                 url: "/user/check-user",
             });
-            dispatch(saveUser(response?.data?.data))
+            dispatch(saveUser())
         } catch (error) {
+            dispatch(clearUser())
             console.log(error);
         }
     };
