@@ -1,6 +1,8 @@
-import bcrypt from 'bcrypt'
-import { generateToken } from '../utils/token.js';
-import { Mentor } from '../models/mentorModel.js';
+import bcrypt from "bcrypt";
+import { generateToken } from "../utils/token.js";
+import { Mentor } from "../models/mentorModel.js";
+
+const NODE_ENV = process.env.NODE_ENV;
 
 export const mentorSignup = async (req, res, next) => {
     try {
@@ -20,14 +22,19 @@ export const mentorSignup = async (req, res, next) => {
         const newMentor = new Mentor({ name, email, password: hashedPassword, mobile, profilePic });
         await newMentor.save();
 
-        const token = generateToken(newMentor._id,'mentor');
+        const token = generateToken(newMentor._id, "mentor");
 
-        res.cookie("token", token);
+        // res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: NODE_ENV === "production" ? "None" : "Lax",
+            secure: NODE_ENV === "production",
+            httpOnly: NODE_ENV === "production",
+        });
 
         res.json({ success: true, message: "mentor account created successfully" });
     } catch (error) {
         console.log(error);
-    res.status(error.statusCode || 500).json(error.message || 'Internal server error')        
+        res.status(error.statusCode || 500).json(error.message || "Internal server error");
     }
 };
 
@@ -48,47 +55,52 @@ export const mentorLogin = async (req, res, next) => {
             return res.status(401).json({ message: "user not autherized" });
         }
 
-        const token = generateToken(isMentorExist._id,'mentor');
+        const token = generateToken(isMentorExist._id, "mentor");
 
-        res.cookie("token", token);
+        // res.cookie("token", token);
+        res.cookie("token", token, {
+            sameSite: NODE_ENV === "production" ? "None" : "Lax",
+            secure: NODE_ENV === "production",
+            httpOnly: NODE_ENV === "production",
+        });
+
         res.json({ success: true, message: "menotr login successfull" });
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode || 500).json(error.message || 'Internal server error')
+        res.status(error.statusCode || 500).json(error.message || "Internal server error");
     }
 };
 
-
 export const mentorProfile = async (req, res, next) => {
     try {
+        const { user } = req;
 
-        const {user}=req
-
-        const userData = await Mentor.findById(user.id).select('-password')
+        const userData = await Mentor.findById(user.id).select("-password");
 
         res.json({ success: true, message: "user profile fetched", userData });
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode || 500).json(error.message || 'Internal server error')
+        res.status(error.statusCode || 500).json(error.message || "Internal server error");
     }
 };
 export const mentorLogout = async (req, res, next) => {
     try {
-
-        res.clearCookie('token')
+        res.clearCookie("token", {
+            sameSite: NODE_ENV === "production" ? "None" : "Lax",
+            secure: NODE_ENV === "production",
+            httpOnly: NODE_ENV === "production",
+        });
         res.json({ success: true, message: "user logged out" });
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode || 500).json(error.message || 'Internal server error')
+        res.status(error.statusCode || 500).json(error.message || "Internal server error");
     }
 };
 export const checkMentor = async (req, res, next) => {
     try {
-
         res.json({ success: true, message: "mentor autherized" });
     } catch (error) {
         console.log(error);
-        res.status(error.statusCode || 500).json(error.message || 'Internal server error')
+        res.status(error.statusCode || 500).json(error.message || "Internal server error");
     }
 };
-
