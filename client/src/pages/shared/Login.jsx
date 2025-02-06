@@ -2,10 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { axiosInstance } from "../../config/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUser, saveUser } from "../../redux/features/userSlice";
+import toast from "react-hot-toast";
 
 export const Login = ({ role }) => {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const user = {
         role: "user",
@@ -28,8 +32,12 @@ export const Login = ({ role }) => {
                 data: data,
             });
             console.log("response====", response);
+            dispatch(saveUser(response?.data?.data));
+            toast.success("Login success");
             navigate(user.profileRoute);
         } catch (error) {
+            dispatch(clearUser());
+            toast.error("Login Failed");
             console.log(error);
         }
     };
