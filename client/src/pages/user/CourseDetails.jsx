@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
+import { useFetch } from "../../hooks/useFetch";
+import toast from "react-hot-toast";
 
 export const CourseDetails = () => {
     const params = useParams();
@@ -8,24 +10,23 @@ export const CourseDetails = () => {
 
     console.log("params===", courseId);
 
-    const [courseDetails, setCourseDetails] = useState({});
+    const [courseDetails, isLoading, error] = useFetch(`/courses/course-details/${courseId}`);
 
-    const fetchCourses = async () => {
+    const addToCart = async () => {
         try {
             const response = await axiosInstance({
-                method: "GET",
-                url: `/courses/course-details/${courseId}`,
+                url: "/cart/add-to-cart",
+                method: "POST",
+                data: { courseId },
             });
+
             console.log("response====", response);
-            setCourseDetails(response?.data?.data);
+            toast.success("course added to cart");
         } catch (error) {
             console.log(error);
+            toast.error(error?.response?.data?.message);
         }
     };
-
-    useEffect(() => {
-        fetchCourses();
-    }, []);
 
     return (
         <div>
@@ -36,6 +37,10 @@ export const CourseDetails = () => {
                 <h2 className="text-3xl font-bold">{courseDetails?.title} </h2>
                 <p className="text-md font-semibold">{courseDetails?.description} </p>
                 <img src={courseDetails?.image} alt="" />
+                <button onClick={addToCart} className="btn btn-success">
+                    {" "}
+                    Add to Cart{" "}
+                </button>
             </section>
         </div>
     );

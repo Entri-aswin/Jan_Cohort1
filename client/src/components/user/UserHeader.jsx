@@ -19,7 +19,7 @@ export const UserHeader = () => {
 
             <div className="flex gap-14 items-center ">
                 <DarkMode />
-                <Link to={'/user/cart'}>
+                <Link to={"/user/cart"}>
                     <ShoppingBag />
                 </Link>
                 <Link to={"/user/profile"}>

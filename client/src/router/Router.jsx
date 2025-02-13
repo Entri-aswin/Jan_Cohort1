@@ -13,6 +13,7 @@ import { Profile } from "../pages/user/Profile";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { ProtectedRouteMentor } from "./ProtectedRouteMentor";
 import { CreateCourse } from "../pages/mentor/CreateCourse";
+import { Cart } from "../pages/user/Cart";
 
 const data = {};
 export const router = createBrowserRouter([
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "cart",
-                        // element: <Cart />,
+                        element: <Cart />,
                     },
                     {
                         path: "orders",
@@ -71,7 +72,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "payment/success",
-                        // element: <h2>Payment success</h2>,
+                        element: <h2>Payment success</h2>,
                     },
                 ],
             },
