@@ -16,6 +16,7 @@ router.get("/profile", userAuth, userProfile);
 //logout
 router.get("/logout", userAuth, userLogout);
 
+router.get('/get-all-user', )
 //profile-update
 //forgot-password
 //change-password

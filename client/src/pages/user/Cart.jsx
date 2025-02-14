@@ -64,7 +64,7 @@ export const Cart = () => {
                         <h2>price :{value?.courseId?.price} </h2>
                     ))}
                     <h2> Total Price : {cartDetails?.totalPrice} </h2>
-                    <button className="btn btn-success mt-20" >Make payment</button>
+                    <button className="btn btn-success mt-20" onClick={makePayment} >Make payment</button>
                 </div>
             </section>
         </div>

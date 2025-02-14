@@ -1,8 +1,11 @@
 import e from "express";
 import { userAuth } from "../middlewares/userAuth.js";
 import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { Order } from "../models/orderModel.js";
 const router = e.Router();
+
+const stripe = new Stripe(process.env.Stripe_Private_Api_Key);
+const client_domain = process.env.CLIENT_DOMAIN;
 
 router.post("/create-checkout-session", userAuth, async (req, res, next) => {
     try {
@@ -29,16 +32,21 @@ router.post("/create-checkout-session", userAuth, async (req, res, next) => {
             cancel_url: `${client_domain}/user/payment/cancel`,
         });
 
+        const newOrder = new Order({ userId, sessionId: session?.id });
+        await newOrder.save()
+
         res.json({ success: true, sessionId: session.id });
     } catch (error) {
         return res.status(error.statusCode || 500).json({ message: error.message || "Internal server error" });
     }
 });
 
-paymentRouter.get("/session-status", async (req, res) => {
+router.get("/session-status", async (req, res) => {
     try {
         const sessionId = req.query.session_id;
         const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+        console.log("session=====", session);
 
         res.send({
             status: session?.status,
